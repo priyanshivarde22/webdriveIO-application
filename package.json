@@ -17,6 +17,7 @@
         "@wdio/allure-reporter": "^8.6.6",
         "@wdio/appium-service": "^8.5.1",
         "appium": "^1.22.3",
+        "log4js": "^6.9.1",
         "logplease": "^1.2.15",
         "wdio-html-nice-reporter": "^8.1.0"
     }
