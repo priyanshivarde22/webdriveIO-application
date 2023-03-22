@@ -2,7 +2,6 @@ const ActionHelper = require('../helpers/actionHelpers')
 
 let elements
 const locators = {
-
     'android':{
         'loginBtn':'~button-login-container',
         'email':`//android.widget.EditText[contains(@content-desc,'input-email')]`,

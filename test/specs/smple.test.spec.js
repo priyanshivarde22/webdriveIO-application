@@ -9,17 +9,20 @@ const ActionHelper = require("../helpers/actionHelpers");
 const assert = require("assert");
 const should = require("chai").should();
 const { expect } = require("chai");
-const CONTEXT_REF = {
-  NATIVE: 'native',
-  WEBVIEW: 'webview'
-};
+const log4js = require("log4js");
 
+log4js.configure({
+  appenders: { logger: { type: "file", filename: "logger.log" } },
+  categories: { default: { appenders: ["logger"], level: "info" } },
+});
+
+const logger = log4js.getLogger("logger");
 describe("webdriverio application testing", async function () {
   var email = await genEmail;
   it("execute signup...", async function () {
     await signup.loginBtn().click();
     await signup.signupbtn().click();
-    await console.log("email: ", email);
+    logger.info("email: ", email);
     await signup.email().setValue(email);
     await signup.password().setValue("test4321");
     await signup.repeatPassword().setValue("test4321");
@@ -32,10 +35,7 @@ describe("webdriverio application testing", async function () {
     await login.email().setValue(email);
     //await driver.pause(10000);
     await login.password().setValue("test4321");
-     if(await ActionHelper.isPlatformAndroid()){
-    
-    }
-    else{
+    if (!ActionHelper.isPlatformAndroid()) {
       await login.x().click();
     }
     await login.clickLogin().click();
@@ -69,90 +69,89 @@ describe("webdriverio application testing", async function () {
   });
 
   it("execute swipe...", async function () {
-    if(ActionHelper.isPlatformAndroid()){
+    if (ActionHelper.isPlatformAndroid()) {
       await swipe.clickSwipe().click();
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 900, y: 1400 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 300, y: 1400 } },
-      { action: "release" },
-    ]);
-    await driver.pause(5000)
-    let assetSwipe = await swipe.assetSwipe().getText();
-    await assert.strictEqual(assetSwipe, "COMPATIBLE");
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 900, y: 1400 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 300, y: 1400 } },
+        { action: "release" },
+      ]);
+      await driver.pause(5000);
+      let assetSwipe = await swipe.assetSwipe().getText();
+      await assert.strictEqual(assetSwipe, "COMPATIBLE");
+    } else {
+      await swipe.clickSwipe().click();
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.touchPerform([
+        { action: "press", options: { x: 321, y: 550 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 50, y: 550 } },
+        { action: "release" },
+      ]);
+      await driver.pause(5000);
+      let assetSwipe = await swipe.assetSwipe().getText();
+      await assert.strictEqual(assetSwipe, "COMPATIBLE");
     }
-    else{
-    await swipe.clickSwipe().click();
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.touchPerform([
-      { action: "press", options: { x: 321, y: 550 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 50, y: 550 } },
-      { action: "release" },
-    ]);
-    await driver.pause(5000)
-    let assetSwipe = await swipe.assetSwipe().getText();
-    await assert.strictEqual(assetSwipe, "COMPATIBLE");
-  }
   });
 
   it("execute drag and drop...", async function () {
@@ -160,17 +159,13 @@ describe("webdriverio application testing", async function () {
     ActionHelper.isPlatformAndroid() ? (pixel = 100) : (pixel = 10);
     await dradAnddrop.clickDrop().click();
     const drag_img1_x = (await dradAnddrop.dragImg1().getLocation()).x;
-    console.log("XXX: ", drag_img1_x);
     const drag_img1_y = (await dradAnddrop.dragImg1().getLocation()).y;
-    console.log("yyyX: ", drag_img1_y);
     const drag_img1_target_x = (
       await dradAnddrop.dragImg1Target().getLocation()
     ).x;
-    console.log("xxxX: ", drag_img1_target_x);
     const drag_img1_target_y = (
       await dradAnddrop.dragImg1Target().getLocation()
     ).y;
-    console.log("yyyy: ", drag_img1_target_y);
     const drag_img2_x = (await dradAnddrop.dragImg2().getLocation()).x;
     const drag_img2_y = (await dradAnddrop.dragImg2().getLocation()).y;
     const drag_img2_target_x = (
@@ -295,66 +290,65 @@ describe("webdriverio application testing", async function () {
   });
 
   it("execute webview...", async function () {
-    if(ActionHelper.isPlatformAndroid()){
-    await webbrowser.webBtn().click();
-    const x = await driver.getContexts();
-    console.log("context: ", x);
-    await driver.switchContext(x[1]);
-    await driver.pause(5000);
-    await driver.touchPerform([
-      { action: "press", options: { x: 190, y: 702 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 190, y: 500 } },
-      { action: "release" },
-    ]);
-    await webbrowser.getStartedBtn().click();
-    let assertGetStarted = await webbrowser.assertGetStarted().getText();
-    await assert.strictEqual(assertGetStarted, "Getting Started");
-    await driver.pause(1000);
-    await webbrowser.homeBtn().click();
-    await driver.pause(1000);
-    await webbrowser.webdriverioBtn().click();
-    let assertWebdriverio = await webbrowser.assertWebdriverio().getText();
-    await driver.pause(1000);
-    await assert.strictEqual(assertWebdriverio, "Why Webdriver.IO?");
-    await driver.pause(1000);
-    await webbrowser.homeBtn().click();
-    await driver.pause(1000);
-    await webbrowser.githubBtn().click();
-    await driver.pause(1000);
-  }
-  else{
-    await webbrowser.webBtn().click();
-    // await driver.pause(5000);
-    // const x = await driver.getContexts();
-    // console.log("context: ", x);
-    // await driver.pause(10000)
-    // await driver.switchContext('WEBVIEW_1');
-    // await driver.pause(5000);
-    await driver.touchPerform([
-      { action: "press", options: { x: 190, y: 702 } },
-      { action: "wait", options: { ms: 1000 } },
-      { action: "moveTo", options: { x: 190, y: 500 } },
-      { action: "release" },
-    ]);
-    await webbrowser.getStartedBtn().click();
-    let assertGetStarted = await webbrowser.assertGetStarted().getText();
-    await assert.strictEqual(assertGetStarted, "Getting Started");
-    await driver.pause(1000);
-    await webbrowser.homeBtn().click();
-    await driver.pause(1000);
-    await webbrowser.webdriverioBtn().click();
-    let assertWebdriverio = await webbrowser.assertWebdriverio().getText();
-    await assert.strictEqual(assertWebdriverio, "Why Webdriver.IO?");
-    await driver.pause(1000);
-    await webbrowser.homeBtn().click();
-    await driver.pause(1000);
-    await webbrowser.githubBtn().click();
-    await driver.pause(1000);  
-    let assertGitHub = await webbrowser.githubAssertion().getText();
-    await assert.strictEqual(assertGitHub, "WebdriverIO");
-    await driver.pause(1000);
-    await webbrowser.clickHomeBTN().click();
-  }
+    if (ActionHelper.isPlatformAndroid()) {
+      await webbrowser.webBtn().click();
+      const x = await driver.getContexts();
+      logger.info("context: ", x);
+      await driver.switchContext(x[1]);
+      await driver.pause(5000);
+      await driver.touchPerform([
+        { action: "press", options: { x: 190, y: 702 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 190, y: 500 } },
+        { action: "release" },
+      ]);
+      await webbrowser.getStartedBtn().click();
+      let assertGetStarted = await webbrowser.assertGetStarted().getText();
+      await assert.strictEqual(assertGetStarted, "Getting Started");
+      await driver.pause(1000);
+      await webbrowser.homeBtn().click();
+      await driver.pause(1000);
+      await webbrowser.webdriverioBtn().click();
+      let assertWebdriverio = await webbrowser.assertWebdriverio().getText();
+      await driver.pause(1000);
+      await assert.strictEqual(assertWebdriverio, "Why Webdriver.IO?");
+      await driver.pause(1000);
+      await webbrowser.homeBtn().click();
+      await driver.pause(1000);
+      await webbrowser.githubBtn().click();
+      await driver.pause(1000);
+    } else {
+      await webbrowser.webBtn().click();
+      // await driver.pause(5000);
+      // const x = await driver.getContexts();
+      // console.log("context: ", x);
+      // await driver.pause(10000)
+      // await driver.switchContext('WEBVIEW_1');
+      // await driver.pause(5000);
+      await driver.touchPerform([
+        { action: "press", options: { x: 190, y: 702 } },
+        { action: "wait", options: { ms: 1000 } },
+        { action: "moveTo", options: { x: 190, y: 500 } },
+        { action: "release" },
+      ]);
+      await webbrowser.getStartedBtn().click();
+      let assertGetStarted = await webbrowser.assertGetStarted().getText();
+      await assert.strictEqual(assertGetStarted, "Getting Started");
+      await driver.pause(1000);
+      await webbrowser.homeBtn().click();
+      await driver.pause(1000);
+      await webbrowser.webdriverioBtn().click();
+      let assertWebdriverio = await webbrowser.assertWebdriverio().getText();
+      await assert.strictEqual(assertWebdriverio, "Why Webdriver.IO?");
+      await driver.pause(1000);
+      await webbrowser.homeBtn().click();
+      await driver.pause(1000);
+      await webbrowser.githubBtn().click();
+      await driver.pause(1000);
+      let assertGitHub = await webbrowser.githubAssertion().getText();
+      await assert.strictEqual(assertGitHub, "WebdriverIO");
+      await driver.pause(1000);
+      await webbrowser.clickHomeBTN().click();
+    }
   });
 });
